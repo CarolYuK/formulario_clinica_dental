@@ -1,170 +1,173 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.clinica_dental_proyecto;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 
-
-/**
- *
- * @author user
- */
-public class Clinica_dental_proyecto extends JFrame{
+public class Clinica_dental_proyecto extends JFrame {
     private JTextField idField, nombreField, apellidoField, dniNieField, telefonoField, emailField;
     private JComboBox<String> tratamientoComboBox;
     private JDateChooser fechaRegistroChooser, fechaVisitaChooser;
     private JButton enviarButton, buscarButton;
 
+    private final Color morado = new Color(115, 93, 165);
+    private final Font fuenteBase = new Font("Segoe UI", Font.PLAIN, 16);
+
     public Clinica_dental_proyecto() {
-        // Configuración de la ventana principal
-        setTitle("Formulario de Registro");
-        setSize(400, 400);
+        setTitle("Clínica Dental Sonría – Registro");
+        setSize(650, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(11, 2, 10, 10));
+        setLocationRelativeTo(null);
 
-        // Componentes del formulario
-        JLabel idLabel = new JLabel("ID:");
-        idField = new JTextField("Generación automática");
-        idField.setEditable(false);
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(237, 233, 250)); 
 
-        JLabel nombreLabel = new JLabel("Nombre:");
-        nombreField = new JTextField();
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(12, 12, 12, 12);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel apellidoLabel = new JLabel("Apellido:");
-        apellidoField = new JTextField();
+        int y = 0;
 
-        JLabel dniNieLabel = new JLabel("DNI/NIE:");
-        dniNieField = new JTextField();
+        gbc.gridx = 0; gbc.gridy = y;
+        panel.add(label("ID:"), gbc);
+        gbc.gridx = 1;
+        idField = textField("Generación automática", false);
+        panel.add(idField, gbc);
 
-        JLabel telefonoLabel = new JLabel("Teléfono:");
-        telefonoField = new JTextField();
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Nombre:"), gbc);
+        gbc.gridx = 1;
+        nombreField = textField("", true);
+        panel.add(nombreField, gbc);
 
-        JLabel emailLabel = new JLabel("Email:");
-        emailField = new JTextField();
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Apellido:"), gbc);
+        gbc.gridx = 1;
+        apellidoField = textField("", true);
+        panel.add(apellidoField, gbc);
 
-        JLabel tratamientoLabel = new JLabel("Tratamiento:");
-        tratamientoComboBox = new JComboBox<>(new String[]{"Ninguno", "Implantes Dentales", "Ortodencia y Brackets", "Blanqueamiento Dental", "Estética Dental", "Rehabilitación Oral","Odontopediatría"});
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("DNI/NIE:"), gbc);
+        gbc.gridx = 1;
+        dniNieField = textField("", true);
+        panel.add(dniNieField, gbc);
 
-        JLabel fechaRegistroLabel = new JLabel("Fecha de Registro:");
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Teléfono:"), gbc);
+        gbc.gridx = 1;
+        telefonoField = textField("", true);
+        panel.add(telefonoField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Email:"), gbc);
+        gbc.gridx = 1;
+        emailField = textField("", true);
+        panel.add(emailField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Tratamiento:"), gbc);
+        gbc.gridx = 1;
+        tratamientoComboBox = new JComboBox<>(new String[]{
+                "Ninguno", "Implantes Dentales", "Ortodencia y Brackets", "Blanqueamiento Dental",
+                "Estética Dental", "Rehabilitación Oral", "Odontopediatría"
+        });
+        tratamientoComboBox.setFont(fuenteBase);
+        tratamientoComboBox.setBackground(Color.WHITE);
+        tratamientoComboBox.setBorder(BorderFactory.createLineBorder(morado, 1, true));
+        panel.add(tratamientoComboBox, gbc);
+
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Fecha de Registro:"), gbc);
+        gbc.gridx = 1;
         fechaRegistroChooser = new JDateChooser();
+        fechaRegistroChooser.setFont(fuenteBase);
+        fechaRegistroChooser.setBorder(BorderFactory.createLineBorder(morado, 1, true));
+        panel.add(fechaRegistroChooser, gbc);
 
-        JLabel fechaVisitaLabel = new JLabel("Fecha de Visita:");
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(label("Fecha de Visita:"), gbc);
+        gbc.gridx = 1;
         fechaVisitaChooser = new JDateChooser();
+        fechaVisitaChooser.setFont(fuenteBase);
+        fechaVisitaChooser.setBorder(BorderFactory.createLineBorder(morado, 1, true));
+        panel.add(fechaVisitaChooser, gbc);
 
         // Botones
-        enviarButton = new JButton("Enviar");
-        buscarButton = new JButton("Buscar por ID");
+        enviarButton = boton("Enviar");
+        buscarButton = boton("Buscar por ID");
 
-        // Añadir los componentes a la ventana
-        add(idLabel);
-        add(idField);
+        gbc.gridx = 0; gbc.gridy = ++y;
+        panel.add(enviarButton, gbc);
+        gbc.gridx = 1;
+        panel.add(buscarButton, gbc);
 
-        add(nombreLabel);
-        add(nombreField);
+        // Acciones
+        enviarButton.addActionListener(e -> almacenarDatos());
+        buscarButton.addActionListener(e -> new Busqueda_ID().setVisible(true));
 
-        add(apellidoLabel);
-        add(apellidoField);
+        add(panel);
+    }
 
-        add(dniNieLabel);
-        add(dniNieField);
+    private JLabel label(String text) {
+        JLabel label = new JLabel(text);
+        label.setFont(fuenteBase.deriveFont(Font.BOLD));
+        label.setForeground(new Color(50, 50, 50));
+        return label;
+    }
 
-        add(telefonoLabel);
-        add(telefonoField);
+    private JTextField textField(String texto, boolean editable) {
+        JTextField field = new JTextField(texto);
+        field.setFont(fuenteBase);
+        field.setEditable(editable);
+        field.setBackground(Color.WHITE);
+        field.setBorder(BorderFactory.createLineBorder(morado, 1, true));
+        return field;
+    }
 
-        add(emailLabel);
-        add(emailField);
-
-        add(tratamientoLabel);
-        add(tratamientoComboBox);
-
-        add(fechaRegistroLabel);
-        add(fechaRegistroChooser);
-
-        add(fechaVisitaLabel);
-        add(fechaVisitaChooser);
-
-        add(enviarButton);
-        add(buscarButton);
-
-        // Acción del botón enviar
-        enviarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                almacenarDatos();  // Aquí llamamos al método almacenarDatos()
-            }
-        });
-
-        // Acción del botón buscar
-        buscarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Busqueda_ID().setVisible(true); // Abre la ventana de búsqueda
-            }
-        });
-
-        setLocationRelativeTo(null);  // Centrar la ventana
+    private JButton boton(String texto) {
+        JButton button = new JButton(texto);
+        button.setFont(fuenteBase.deriveFont(Font.BOLD));
+        button.setBackground(morado);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createLineBorder(morado.darker(), 1));
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        return button;
     }
 
     private void almacenarDatos() {
-        String id = idField.getText();
         String nombre = nombreField.getText();
         String apellido = apellidoField.getText();
         String dniNie = dniNieField.getText();
         String telefono = telefonoField.getText();
         String email = emailField.getText();
         String tratamiento = (String) tratamientoComboBox.getSelectedItem();
-        java.util.Date fechaRegistro = fechaRegistroChooser.getDate();
-        java.util.Date fechaVisita = fechaVisitaChooser.getDate();
+        Date fechaRegistro = fechaRegistroChooser.getDate();
+        Date fechaVisita = fechaVisitaChooser.getDate();
 
-        
-        // Validación de los campos obligatorios
         if (nombre.isEmpty() || apellido.isEmpty() || dniNie.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;  // Salir del método si hay campos vacíos
+            return;
         }
 
-        // Validación del campo tratamiento
         if (tratamiento.equals("Ninguno")) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un tratamiento válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;  // Salir del método si el tratamiento es "Ninguno"
+            JOptionPane.showMessageDialog(this, "Seleccione un tratamiento válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        // Validar que la fecha de registro y la fecha de visita no sean nulas
-        if (fechaRegistro == null || fechaVisita == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione las fechas de registro y visita.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;  // Salir del método si las fechas son nulas
-        }
-        
-        // Aquí se hace la conexión y se guarda en la base de datos (ver parte de la conexión)
-        // Llamada a una clase que se encargue de la conexión y consulta a la base de datos
-        // Ejemplo: ConexionBaseDeDatos.guardarRegistro(id, nombre, apellido, dniNie, telefono, email, tratamiento, fechaRegistro, fechaVisita);
-        // Llamada al método para guardar en la base de datos
-        Conexion.guardarRegistro(nombre, apellido, dniNie, telefono, email, tratamiento, fechaRegistro, fechaVisita);
-            JOptionPane.showMessageDialog(this, "Los datos se han registrado correctamente.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-    }
 
-    private void buscarPorId() {
-    String id = idField.getText();
-    
-    // Verifica si el ID no está vacío o no contiene caracteres no válidos antes de buscarlo.
-    if (!id.isEmpty()) {
-        // Crea la ventana Buscar, pasando solo el ID
-        new Buscar(id).setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        if (fechaRegistro == null || fechaVisita == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione ambas fechas.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Conexion.guardarRegistro(nombre, apellido, dniNie, telefono, email, tratamiento, fechaRegistro, fechaVisita);
+        JOptionPane.showMessageDialog(this, "Datos registrados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Clinica_dental_proyecto().setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new Clinica_dental_proyecto().setVisible(true));
     }
 }
